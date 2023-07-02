@@ -1,0 +1,75 @@
+﻿@model MovieVM
+@{
+    ViewData["Title"] = "Movie Form";
+}
+
+<h2> Movie</h2>
+
+<hr />
+
+
+<div class="col-md-4">
+    <form method="POST" asp-action="Create" asp-controller="Movies" enctype="multipart/form-data">
+        <div class="form-group">
+            <label class="text-muted" asp-for="Title"></label>
+            <input type="text" class="form-control" asp-for="Title" maxlength="250" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="text-muted" asp-for="GunreId"></label>
+            <select class="form-control" asp-for="GunreId" asp-items="@(new SelectList(Model.Gunres, "GunreId", "Name"))">
+                <option></option>
+            </select>
+            <span asp-validation-for="GunreId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group w-50">
+            <label class="text-muted" asp-for="Year"></label>
+            <input type="number" class="form-control" asp-for="Year" value="" />
+            <span asp-validation-for="Year" class="text-danger"></span>
+        </div>
+
+        <div class="form-group w-50">
+            <label class="text-muted" asp-for="Rate"></label>
+            <input type="number" class="form-control" asp-for="Rate" value="" />
+            <span asp-validation-for="Rate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group ">
+            <label class="text-muted" asp-for="StoryLine"></label>
+            <textarea class="form-control" asp-for="StoryLine" maxlength="2500" rows="4"></textarea>
+            <span asp-validation-for="StoryLine" class="text-danger"></span>
+        </div>
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" asp-for="Poster" accept="image/*" />
+            <label class="custom-file-label" asp-for="Poster"></label>
+            <span asp-validation-for="Poster" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-outline-success mt-4"> Save </button>
+        <a asp-action="Index" class="btn btn-outline-danger mt-4"> Back </a>
+
+
+    </form>
+</div>
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+    //get img type and show it to end user
+    $(document).ready(function () {
+        $('#Poster').on('change', function () {
+            var selectedfile = $(this).val().split('\\').pop();
+            $(this).siblings('label').text(selectedfile);
+        });
+        //apply date picker
+        $('#Year').datepicker({
+            format: 'yyyy',
+            ViewMode: 'years',
+            minViewMode: 'years',
+            autoclose: true,
+            startDate: new Date('1950-01-01'),
+            endDate: new Date()
+        });
+    });
+</script>
+
+}

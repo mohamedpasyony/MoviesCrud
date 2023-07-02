@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Movie>
+@{ ViewData["Title"] = "Detail";
+}
+
+@{
+    foreach (var item in Model)
+    {
+        <div class="card mb-3" style="max-width: 800px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="data:image\/*;base64,@(Convert.ToBase64String(item.Poster))" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bolder">@item.Title</h5>
+                        <p class="card-text font-weight-bolder">Story : </p>
+                        <p class="card-text">@item.StoryLine</p>
+                        <p class="card-text"><span class="text-muted">Rate : </span> <i class="bi bi-star-fill text-warning"></i>  <small class="text-muted">@item.Rate</small></p>
+                        <p class="card-text">  <small class="text-muted"> Year : @item.Year</small></p>
+                        <p class="card-text">  <small class="text-muted"> Gunre : @item.Gunre.Name</small></p>
+                        <a asp-action="Index" class="btn btn-outline-danger mt-4"> Back </a>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
